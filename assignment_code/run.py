@@ -1,5 +1,5 @@
 import sys
-from implements import Basic, Block, Paddle, Ball
+from implements import Basic, Block, Paddle, Ball, StrongBlock
 import config
 import random
 
@@ -31,9 +31,12 @@ def create_blocks():
                 + config.scoreboard_height
                 + j * (config.block_size[1] + config.spacing[1])
             )
-            color_index = j % len(config.colors)
-            color = config.colors[color_index]
-            block = Block(color, (x, y))
+            if random.random() <= 0.2:
+                block = StrongBlock(color=(128, 128, 128), pos=(x, y))
+            else:
+                color_index = j % len(config.colors)
+                color = config.colors[color_index]
+                block = Block(color, (x, y))
             BLOCKS.append(block)
 
 
