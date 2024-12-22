@@ -39,6 +39,10 @@ class Block(Basic):
         # TODO: Implement an event when block collides with a ball
         if self.alive:
             self.alive = False
+        if random.random() <= 0.2:
+            item_color = random.choice([(255, 0, 0), (0, 0, 255)])
+            item = Item(color=item_color, pos=self.rect.center)
+            items.append(item)
 
 
 
@@ -100,3 +104,15 @@ class Ball(Basic):
         # TODO: Implement a service that returns whether the ball is alive or not
         if self.rect.bottom > 720:
             return False
+
+class Item(Basic):
+    def __init__(self, color: tuple, pos: tuple):
+        super().__init__(color, speed = 3, pos=pos, size=config.item_size)
+        self.alive = True
+
+    def draw(self, surface):
+        if self.alive:
+            pygame.draw.ellipse(surface, self.color, self.rect)
+
+    def move(self):
+        self.rect.move_ip(0, self.speed)
