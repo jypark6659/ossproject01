@@ -1,6 +1,7 @@
 import sys
 from implements import Basic, Block, Paddle, Ball
 import config
+import random
 
 import pygame
 from pygame.locals import QUIT, Rect, K_ESCAPE, K_SPACE
@@ -63,11 +64,16 @@ def tick():
             ball.rect.centerx = paddle.rect.centerx
             ball.rect.bottom = paddle.rect.top
 
-        ball.collide_block(BLOCKS)
+        ball.collide_block(BLOCKS, ITEMS)
         ball.collide_paddle(paddle)
         ball.hit_wall()
         if ball.alive() == False:
             BALLS.remove(ball)
+    
+    for item in ITEMS:
+        item.move()
+        
+    ITEMS = [item for item in ITEMS if item.alive]
 
 
 def main():
@@ -90,6 +96,9 @@ def main():
 
         for block in BLOCKS:
             block.draw(surface)
+
+        for item in ITEMS:
+            item.draw(surface)
 
         cur_score = config.num_blocks[0] * config.num_blocks[1] - len(BLOCKS)
 
