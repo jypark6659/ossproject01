@@ -77,7 +77,7 @@ class Ball(Basic):
         # TODO: Implement an event when the ball hits a block
         for block in blocks:
             if block.alive and self.rect.colliderect(block.rect):
-                block.collide()
+                block.collide(items)
                 self.dir = 360 - self.dir
                 break
 
