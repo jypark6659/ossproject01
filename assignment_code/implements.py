@@ -116,3 +116,17 @@ class Item(Basic):
 
     def move(self):
         self.rect.move_ip(0, self.speed)
+
+class StrongBlock(Block):
+    def __init__(self, color: tuple, pos: tuple, durability: int = 4):
+        super().__init__(color, pos)
+        self.durability = durability
+        self.colors = [(255, 255, 0), (255, 165, 0), (255, 0, 0), (128, 128, 128)]
+
+    def collide(self, items: list):
+        if self.alive:
+            self.durability -= 1
+            if self.durability > 0:
+                self.color = self.colors[self.durability - 1]
+            else:
+                self.alive = False
